@@ -32,6 +32,9 @@ ROOM = "room"
 CURRENT = "current"
 TEST = "test"
 
+# how many tiles will generate (will crash after 30)
+ROOMS_GENERATED = 20
+
 xScreenScaling = xSize / 10
 yScreenScaling = ySize / 10
 
@@ -91,7 +94,7 @@ def GenerateRooms(floor):
     lastGenerated = starter
 
     # Range is directly proportional to the amount of rooms it will generate (EXCLUDING STARTING ROOM)
-    for roomNum in range(20):
+    for roomNum in range(ROOMS_GENERATED):
         floor.InitNonSolidRoomsArray()
         possibleNextRooms = PossibleRooms(lastGenerated, floor)
         # In the case that there are no valid rooms to generate
