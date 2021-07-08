@@ -1,6 +1,7 @@
 import pygame
 import random
 import sys
+import math
 
 pygame.init()
 
@@ -32,16 +33,22 @@ ROOM = "room"
 CURRENT = "current"
 TEST = "test"
 
-# how many tiles will generate (will crash after 30)
-ROOMS_GENERATED = 20
+# max rooms in x and y
+TOTAL_FLOOR_LENGTH = 50
 
-xScreenScaling = xSize / 10
-yScreenScaling = ySize / 10
+# how many tiles will generate (will crash after 30)
+USE_RECOMMENDED_ROOM_AMOUNT = True
+ROOMS_TO_GENERATE = 1250
+if USE_RECOMMENDED_ROOM_AMOUNT:
+    ROOMS_TO_GENERATE = math.floor((TOTAL_FLOOR_LENGTH ** 2) / 2)
+
+xScreenScaling = xSize / TOTAL_FLOOR_LENGTH
+yScreenScaling = ySize / TOTAL_FLOOR_LENGTH
 
 
 def RandomisationDebugger(isInDebug):
     if isInDebug:
-        seed = 1
+        seed = 503555941980892426
         print("Seed was:", seed)
         random.seed(seed)
     else:
@@ -58,6 +65,7 @@ class Floor:
         self.size = size
         self.floor_array = self.InitFloorArray()
         self.nonSolidRooms = []
+        self.roomsWithLikelyMoves = set()
         self.currentRoom = None
 
     def InitFloorArray(self):
@@ -70,7 +78,7 @@ class Floor:
         return floor
 
     def InitNonSolidRoomsArray(self):
-        # Initializes an array of playable rooms for easy lookup
+        # Initializes an array of NON SOLID rooms for easy lookup
         for room in self.floor_array:
             if room.roomType != SOLID:
                 self.nonSolidRooms.append(room)
@@ -79,6 +87,7 @@ class Floor:
         for room in self.floor_array:
             if room.position == coords:
                 return room
+
 
 class Room:
     def __init__(self, position):
@@ -94,20 +103,28 @@ def GenerateRooms(floor):
     lastGenerated = starter
 
     # Range is directly proportional to the amount of rooms it will generate (EXCLUDING STARTING ROOM)
-    for roomNum in range(ROOMS_GENERATED):
+    for roomNum in range(ROOMS_TO_GENERATE):
         floor.InitNonSolidRoomsArray()
         possibleNextRooms = PossibleRooms(lastGenerated, floor)
         # In the case that there are no valid rooms to generate
         while len(possibleNextRooms) == 0:
-            print("No more possible moves, retrying from list")
-            nextAttempt = random.choice(floor.nonSolidRooms)
-            possibleNextRooms = PossibleRooms(nextAttempt, floor)
+            if len(floor.roomsWithLikelyMoves) > 0:
+                # Use up the rooms which are more likely to contain possible moves before trying a random one.
+                nextAttempt = floor.roomsWithLikelyMoves.pop()
+                possibleNextRooms = PossibleRooms(nextAttempt, floor)
+
+            else:
+                nextAttempt = random.choice(floor.nonSolidRooms)
+                possibleNextRooms = PossibleRooms(nextAttempt, floor)
+
         else:
             nextRoom = random.choice(possibleNextRooms)
             for room in floor.floor_array:
                 if room.position == nextRoom:
                     room.roomType = ROOM
                     lastGenerated = room
+            loadPercent = (roomNum / ROOMS_TO_GENERATE)
+            print("Loading: {:.2%}".format(loadPercent))
 
 
 def PossibleRooms(room, floor):
@@ -160,6 +177,9 @@ def PossibleRooms(room, floor):
             pass
         else:
             movesList.append(possibleRoom)
+
+    if len(movesList) > 2:
+        floor.roomsWithLikelyMoves.add(room)  # This set contains moves which likely have an available move
 
     return movesList
 
@@ -231,7 +251,7 @@ def GetClickedRoom(mouse_position, floor):
                         room.roomType = CURRENT
 
 
-mainFloor = Floor(10)
+mainFloor = Floor(TOTAL_FLOOR_LENGTH)
 GenerateRooms(mainFloor)
 DrawRooms(mainFloor)
 
@@ -245,6 +265,7 @@ while running:
             mouse_position = pygame.mouse.get_pos()
             GetClickedRoom(mouse_position, mainFloor)
             DrawRooms(mainFloor)
+            print("Loading: 100%")
             print(mouse_position)
 
     # updates the screen
