@@ -34,7 +34,7 @@ CURRENT = "current"
 TEST = "test"
 
 # max rooms in x and y
-TOTAL_FLOOR_LENGTH = 500
+TOTAL_FLOOR_LENGTH = 50
 
 # how many tiles will generate (will crash after 30)
 USE_RECOMMENDED_ROOM_AMOUNT = True
