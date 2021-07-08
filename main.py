@@ -34,7 +34,7 @@ CURRENT = "current"
 TEST = "test"
 
 # max rooms in x and y
-TOTAL_FLOOR_LENGTH = 50
+TOTAL_FLOOR_LENGTH = 500
 
 # how many tiles will generate (will crash after 30)
 USE_RECOMMENDED_ROOM_AMOUNT = True
@@ -119,10 +119,9 @@ def GenerateRooms(floor):
 
         else:
             nextRoom = random.choice(possibleNextRooms)
-            for room in floor.floor_array:
-                if room.position == nextRoom:
-                    room.roomType = ROOM
-                    lastGenerated = room
+            room = floor.GetRoomAt(nextRoom)
+            room.roomType = ROOM
+            lastGenerated = room
             loadPercent = (roomNum / ROOMS_TO_GENERATE)
             print("Loading: {:.2%}".format(loadPercent))
 
@@ -136,10 +135,9 @@ def PossibleRooms(room, floor):
     def CheckForExistingRoom(possible_room_coords):
         # Checks that the tile is not already a room
         isRoom = False
-        for room in floor.floor_array:
-            if room.position == possible_room_coords:
-                if room.roomType != SOLID:
-                    isRoom = True
+        possible_room = floor.GetRoomAt(possible_room_coords)
+        if possible_room.roomType != SOLID:
+            isRoom = True
         return isRoom
 
     def CheckForThreeOrMoreAdjacentRooms(possible_room_coords):
@@ -150,12 +148,19 @@ def PossibleRooms(room, floor):
         up = [possible_room_coords[0], possible_room_coords[1] - 1]
         down = [possible_room_coords[0], possible_room_coords[1] + 1]
 
-        for room in floor.floor_array:
-            if room.position == right or room.position == left or room.position == up or room.position == down or room.position == possible_room_coords:
-                if room.x != 0 and room.x != floor_size - 1:
-                    if room.y != 0 and room.y != floor_size - 1:
-                        if room.roomType != SOLID:
-                            counter += 1
+        leftRoom = floor.GetRoomAt(left)
+        rightRoom = floor.GetRoomAt(right)
+        upRoom = floor.GetRoomAt(up)
+        downRoom = floor.GetRoomAt(down)
+        possibleRoom = floor.GetRoomAt(possible_room_coords)
+
+        adjacentRooms = [leftRoom, rightRoom, upRoom, downRoom, possibleRoom]
+
+        for room in adjacentRooms:
+            if room.x != 0 and room.x != floor_size - 1:
+                if room.y != 0 and room.y != floor_size - 1:
+                    if room.roomType != SOLID:
+                        counter += 1
         if counter >= 2:
             threeOrMore = True
         return threeOrMore
