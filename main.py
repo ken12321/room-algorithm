@@ -6,6 +6,7 @@ import math
 import setup
 import constants
 import enemy
+import floor
 
 xSize = 500
 ySize = 500
@@ -41,45 +42,6 @@ def UseRandomSeed(is_random):
 
 
 UseRandomSeed(True)  # if true, random seed is used. If false, set seed is used
-
-
-class Floor:
-    def __init__(self, size):
-        self.size = size
-        self.floor_array = self.InitFloorArray()
-        self.nonSolidRooms = []
-        self.roomsWithLikelyMoves = set()
-        self.currentRoom = None
-
-    def InitFloorArray(self):
-        # Initializes the floor's rooms
-        floor = []
-        for r in range(self.size):
-            for c in range(self.size):
-                coords = [c, r]
-                floor.append(Room(coords))
-        return floor
-
-    def InitNonSolidRoomsArray(self):
-        # Initializes an array of NON SOLID rooms for easy lookup
-        for room in self.floor_array:
-            if room.roomType != constants.SOLID:
-                self.nonSolidRooms.append(room)
-
-    def GetRoomAt(self, coords):
-        for room in self.floor_array:
-            if room.position == coords:
-                return room
-
-
-class Room:
-    def __init__(self, position):
-        self.position = position
-        self.x = position[0]
-        self.y = position[1]
-        self.roomType = constants.SOLID
-        self.debugger = False
-        self.difficulty = 1
 
 
 def GenerateRooms(floor):
@@ -284,7 +246,7 @@ def InitEnemy(enemy_difficulty):
     return current_enemy
 
 
-mainFloor = Floor(TOTAL_FLOOR_LENGTH)
+mainFloor = floor.Floor(TOTAL_FLOOR_LENGTH)
 GenerateRooms(mainFloor)
 DrawRooms(mainFloor)
 
