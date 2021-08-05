@@ -5,6 +5,7 @@ import math
 
 import setup
 import constants
+import enemy
 
 xSize = 500
 ySize = 500
@@ -28,59 +29,18 @@ xScreenScaling = xSize / TOTAL_FLOOR_LENGTH
 yScreenScaling = ySize / TOTAL_FLOOR_LENGTH
 
 
-def RandomisationDebugger(isInDebug):
-    if isInDebug:
-        seed = 503555941980892426
-        print("Seed was:", seed)
-        random.seed(seed)
-    else:
+def UseRandomSeed(is_random):
+    if is_random:
         seed = random.randrange(sys.maxsize)
         print("Seed was:", seed)
         random.seed(seed)
+    else:
+        seed = 503555941980892426
+        print("Seed was:", seed)
+        random.seed(seed)
 
 
-RandomisationDebugger(False)  # if false, random seed is used. If true, set seed is used
-
-
-class Enemy:
-    def __init__(self, difficulty):
-        self.difficulty = difficulty
-        self.health = difficulty * 5
-        self.damage = difficulty * 2
-        self.enemyType = self.InitEnemyType()
-        self.sprite = self.InitSprite()
-
-    def InitEnemyType(self):
-        if self.difficulty <= 1:
-            return constants.PIPPER
-        elif 2 <= self.difficulty <= 3:
-            return constants.SLUGGA
-        elif 4 <= self.difficulty <= 5:
-            return constants.LIZASAUR
-        elif 6 <= self.difficulty <= 7:
-            return constants.SKRELL
-        elif 8 <= self.difficulty <= 9:
-            return constants.CULTIST
-        elif 10 <= self.difficulty <= 11:
-            return constants.SIREN
-        elif self.difficulty < 12:
-            return constants.DEMON
-
-    def InitSprite(self):
-        if self.enemyType == constants.PIPPER:
-            return constants.SPRITE_PIPPER
-        elif self.enemyType == constants.SLUGGA:
-            return constants.SPRITE_SLUGGA
-        elif self.enemyType == constants.LIZASAUR:
-            return constants.SPRITE_LIZASAUR
-        elif self.enemyType == constants.SKRELL:
-            return constants.SPRITE_SKRELL
-        elif self.enemyType == constants.CULTIST:
-            return constants.SPRITE_CULTIST
-        elif self.enemyType == constants.SIREN:
-            return constants.SPRITE_SIREN
-        elif self.enemyType == constants.DEMON:
-            return constants.SPRITE_DEMON
+UseRandomSeed(True)  # if true, random seed is used. If false, set seed is used
 
 
 class Floor:
@@ -317,9 +277,8 @@ def InitFightScreen(enemy_difficulty):
     screen.blit(test_text, (0, ySize - 40))
 
 
-
 def InitEnemy(enemy_difficulty):
-    current_enemy = Enemy(enemy_difficulty)
+    current_enemy = enemy.Enemy(enemy_difficulty)
     current_enemy_sprite = current_enemy.sprite
     screen.blit(current_enemy_sprite, (100, 100))
     return current_enemy
