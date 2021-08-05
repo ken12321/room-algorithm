@@ -3,89 +3,14 @@ import random
 import sys
 import math
 
-pygame.init()
-pygame.font.init()
-ROBOTO_30 = pygame.font.SysFont('Roboto', 45)
+import setup
+import constants
 
-# region Sprites
-# region ENEMY SPRITES
-SPRITE_PIPPER = pygame.image.load('./images/enemies/pipper.png')
-SPRITE_PIPPER = pygame.transform.scale(SPRITE_PIPPER, (150, 150))
+xSize = 500
+ySize = 500
 
-SPRITE_SLUGGA = pygame.image.load('./images/enemies/slugga.png')
-SPRITE_SLUGGA = pygame.transform.scale(SPRITE_SLUGGA, (150, 150))
-
-SPRITE_LIZASAUR = pygame.image.load('./images/enemies/lizasaur.png')
-SPRITE_LIZASAUR = pygame.transform.scale(SPRITE_LIZASAUR, (150, 150))
-
-SPRITE_SKRELL = pygame.image.load('./images/enemies/skrell.png')
-SPRITE_SKRELL = pygame.transform.scale(SPRITE_SKRELL, (150, 150))
-
-SPRITE_CULTIST = pygame.image.load('./images/enemies/cultist.png')
-SPRITE_CULTIST = pygame.transform.scale(SPRITE_CULTIST, (150, 150))
-
-SPRITE_SIREN = pygame.image.load('./images/enemies/siren.png')
-SPRITE_SIREN = pygame.transform.scale(SPRITE_SIREN, (150, 150))
-
-SPRITE_DEMON = pygame.image.load('./images/enemies/demon.png')
-SPRITE_DEMON = pygame.transform.scale(SPRITE_DEMON, (150, 150))
-# endregion
-
-SPRITE_ARROW = pygame.image.load('./images/misc/arrow.png')
-SPRITE_ARROW = pygame.transform.scale(SPRITE_ARROW, (75, 75))
-# endregion
-
-# creates screen
-xSize = 1000
-ySize = 1000
-screen = pygame.display.set_mode((xSize, ySize))
-
-# setup
-pygame.display.set_caption("Test game")
-
-# screen background color
-background = pygame.Surface(screen.get_size())
-background = background.convert()
-background.fill((0, 0, 0))
-
-# colors
-PLAYER_BLOCK = (0, 218, 157)
-BORDER_COLOR = (25, 94, 75)
-BLANK_ROOM = (202, 235, 226)
-
-ENEMY_BLOCK = (255, 160, 132)
-ENEMY_BORDER = (243, 53, 1)
-
-BLUE = (110, 110, 223)
-BLACK = (10, 10, 10)
-DEBUG = (248, 172, 172)
-
-TESTCOL = (135, 73, 73)
-
-# fight screen colors
-MAIN_TEXT_SCREEN = (222, 229, 229)
-MAIN_TEXT_BORDER = (157, 197, 187)
-
-# 23, 184, 144
-# 94, 128, 127
-# 8, 45, 15
-
-# room types
-SOLID = "solid"
-ROOM = "room"
-CURRENT = "current"
-TEST = "test"
-ENEMY = "enemy"
-
-# enemy types
-PIPPER = "pipper"
-SLUGGA = "slugga"
-LIZASAUR = "lizasaur"
-SKRELL = "skrell"
-CULTIST = "cultist"
-SIREN = "siren"
-DEMON = "demon"
-
+screen = setup.ScreenSetup(xSize, ySize)
+background = setup.BackgroundSetup(screen)
 
 # max rooms in x and y
 TOTAL_FLOOR_LENGTH = 10
@@ -127,35 +52,35 @@ class Enemy:
 
     def InitEnemyType(self):
         if self.difficulty <= 1:
-            return PIPPER
+            return constants.PIPPER
         elif 2 <= self.difficulty <= 3:
-            return SLUGGA
+            return constants.SLUGGA
         elif 4 <= self.difficulty <= 5:
-            return LIZASAUR
+            return constants.LIZASAUR
         elif 6 <= self.difficulty <= 7:
-            return SKRELL
+            return constants.SKRELL
         elif 8 <= self.difficulty <= 9:
-            return CULTIST
+            return constants.CULTIST
         elif 10 <= self.difficulty <= 11:
-            return SIREN
+            return constants.SIREN
         elif self.difficulty < 12:
-            return DEMON
+            return constants.DEMON
 
     def InitSprite(self):
-        if self.enemyType == PIPPER:
-            return SPRITE_PIPPER
-        elif self.enemyType == SLUGGA:
-            return SPRITE_SLUGGA
-        elif self.enemyType == LIZASAUR:
-            return SPRITE_LIZASAUR
-        elif self.enemyType == SKRELL:
-            return SPRITE_SKRELL
-        elif self.enemyType == CULTIST:
-            return SPRITE_CULTIST
-        elif self.enemyType == SIREN:
-            return SPRITE_SIREN
-        elif self.enemyType == DEMON:
-            return SPRITE_DEMON
+        if self.enemyType == constants.PIPPER:
+            return constants.SPRITE_PIPPER
+        elif self.enemyType == constants.SLUGGA:
+            return constants.SPRITE_SLUGGA
+        elif self.enemyType == constants.LIZASAUR:
+            return constants.SPRITE_LIZASAUR
+        elif self.enemyType == constants.SKRELL:
+            return constants.SPRITE_SKRELL
+        elif self.enemyType == constants.CULTIST:
+            return constants.SPRITE_CULTIST
+        elif self.enemyType == constants.SIREN:
+            return constants.SPRITE_SIREN
+        elif self.enemyType == constants.DEMON:
+            return constants.SPRITE_DEMON
 
 
 class Floor:
@@ -178,7 +103,7 @@ class Floor:
     def InitNonSolidRoomsArray(self):
         # Initializes an array of NON SOLID rooms for easy lookup
         for room in self.floor_array:
-            if room.roomType != SOLID:
+            if room.roomType != constants.SOLID:
                 self.nonSolidRooms.append(room)
 
     def GetRoomAt(self, coords):
@@ -192,7 +117,7 @@ class Room:
         self.position = position
         self.x = position[0]
         self.y = position[1]
-        self.roomType = SOLID
+        self.roomType = constants.SOLID
         self.debugger = False
         self.difficulty = 1
 
@@ -221,7 +146,7 @@ def GenerateRooms(floor):
             nextRoom = random.choice(possibleNextRooms)
             room = floor.GetRoomAt(nextRoom)
             if enemyCounter <= ENEMY_ROOM_TOTAL:
-                determineIfEnemy = [ROOM, ROOM, ENEMY]
+                determineIfEnemy = [constants.ROOM, constants.ROOM, constants.ENEMY]
                 room.roomType = random.choice(determineIfEnemy)
             lastGenerated = room
             loadPercent = (roomNum / ROOMS_TO_GENERATE)
@@ -244,7 +169,7 @@ def PossibleRooms(room, floor):
         # Checks that the tile is not already a room
         isRoom = False
         possible_room = floor.GetRoomAt(possible_room_coords)
-        if possible_room.roomType != SOLID:
+        if possible_room.roomType != constants.SOLID:
             isRoom = True
         return isRoom
 
@@ -267,7 +192,7 @@ def PossibleRooms(room, floor):
         for room in adjacentRooms:
             if room.x != 0 and room.x != floor_size - 1:
                 if room.y != 0 and room.y != floor_size - 1:
-                    if room.roomType != SOLID:
+                    if room.roomType != constants.SOLID:
                         counter += 1
         if counter >= 2:
             threeOrMore = True
@@ -311,7 +236,7 @@ def GenerateStartingRoom(floor):  # Generates the first room
                 possible_starters.append(room)
 
     starter = random.choice(possible_starters)
-    starter.roomType = CURRENT
+    starter.roomType = constants.CURRENT
     floor.currentRoom = starter
     return starter
 
@@ -319,31 +244,31 @@ def GenerateStartingRoom(floor):  # Generates the first room
 def DrawSquare(room):
     x = room.x * xScreenScaling
     y = room.y * yScreenScaling
-    if room.roomType == SOLID:
-        pygame.draw.rect(screen, BLACK, (x, y, xScreenScaling, yScreenScaling))
+    if room.roomType == constants.SOLID:
+        pygame.draw.rect(screen, constants.BLACK, (x, y, xScreenScaling, yScreenScaling))
 
-    elif room.roomType == ROOM:
-        pygame.draw.rect(screen, BLANK_ROOM, (x, y, xScreenScaling, yScreenScaling))
-        pygame.draw.rect(screen, BORDER_COLOR, (x, y, xScreenScaling, yScreenScaling), 2)
+    elif room.roomType == constants.ROOM:
+        pygame.draw.rect(screen, constants.BLANK_ROOM, (x, y, xScreenScaling, yScreenScaling))
+        pygame.draw.rect(screen, constants.BORDER_COLOR, (x, y, xScreenScaling, yScreenScaling), 2)
 
-    elif room.roomType == CURRENT:
-        pygame.draw.rect(screen, PLAYER_BLOCK, (x, y, xScreenScaling, yScreenScaling))
-        pygame.draw.rect(screen, BORDER_COLOR, (x, y, xScreenScaling, yScreenScaling), 2)
+    elif room.roomType == constants.CURRENT:
+        pygame.draw.rect(screen, constants.PLAYER_BLOCK, (x, y, xScreenScaling, yScreenScaling))
+        pygame.draw.rect(screen, constants.BORDER_COLOR, (x, y, xScreenScaling, yScreenScaling), 2)
 
-    elif room.roomType == TEST:
-        pygame.draw.rect(screen, TESTCOL, (x, y, xScreenScaling, yScreenScaling))
+    elif room.roomType == constants.TEST:
+        pygame.draw.rect(screen, constants.TESTCOL, (x, y, xScreenScaling, yScreenScaling))
 
-    elif room.roomType == ENEMY:
-        pygame.draw.rect(screen, ENEMY_BLOCK, (x, y, xScreenScaling, yScreenScaling))
-        pygame.draw.rect(screen, ENEMY_BORDER, (x, y, xScreenScaling, yScreenScaling), 2)
+    elif room.roomType == constants.ENEMY:
+        pygame.draw.rect(screen, constants.ENEMY_BLOCK, (x, y, xScreenScaling, yScreenScaling))
+        pygame.draw.rect(screen, constants.ENEMY_BORDER, (x, y, xScreenScaling, yScreenScaling), 2)
         diff = str(room.difficulty)
         if diff == 0:
             diff = str(1)
-        test = ROBOTO_30.render(diff, False, (0, 0, 0))
+        test = constants.ROBOTO_30.render(diff, False, (0, 0, 0))
         screen.blit(test, (x, y))
 
     if room.debugger:
-        pygame.draw.rect(screen, DEBUG, (x, y, xScreenScaling, yScreenScaling))
+        pygame.draw.rect(screen, constants.DEBUG, (x, y, xScreenScaling, yScreenScaling))
 
 
 def DrawRooms(floor):
@@ -361,7 +286,7 @@ def GetClickedRoom(mouse_position, floor):
         roomX = room.x * xScreenScaling
         roomY = room.y * yScreenScaling
         current_room = floor.currentRoom
-        if room != current_room and room.roomType != SOLID:
+        if room != current_room and room.roomType != constants.SOLID:
             if roomY <= mouseY <= roomY + yScreenScaling:  # if the room has the same coords as the mouse click
                 if roomX <= mouseX <= roomX + xScreenScaling:
                     right = [room.x + 1, room.y]
@@ -369,9 +294,9 @@ def GetClickedRoom(mouse_position, floor):
                     up = [room.x, room.y - 1]
                     down = [room.x, room.y + 1]
                     if floor.GetRoomAt(right) == current_room or floor.GetRoomAt(left) == current_room or floor.GetRoomAt(up) == current_room or floor.GetRoomAt(down) == current_room:
-                        if room.roomType == ENEMY:
+                        if room.roomType == constants.ENEMY:
                             return room
-                        current_room.roomType = ROOM
+                        current_room.roomType = constants.ROOM
                         floor.currentRoom = room
                         return room
 
@@ -380,15 +305,15 @@ def InitFightScreen(enemy_difficulty):
     screen.fill((0, 0, 0))
     textBarSize = yScreenScaling * 3
     curr_enemy = InitEnemy(enemy_difficulty)
-    pygame.draw.rect(screen, MAIN_TEXT_SCREEN, (0, ySize - textBarSize, xSize, textBarSize))
-    pygame.draw.rect(screen, MAIN_TEXT_BORDER, (0, ySize - textBarSize, xSize, textBarSize), 10)
+    pygame.draw.rect(screen, constants.MAIN_TEXT_SCREEN, (0, ySize - textBarSize, xSize, textBarSize))
+    pygame.draw.rect(screen, constants.MAIN_TEXT_BORDER, (0, ySize - textBarSize, xSize, textBarSize), 10)
     enemy_encounter_string = "Enemy encounter! A {} approaches!".format(curr_enemy.enemyType)
-    initial_enemy_encounter_text = ROBOTO_30.render(enemy_encounter_string, False, (0, 0, 0))
+    initial_enemy_encounter_text = constants.ROBOTO_30.render(enemy_encounter_string, False, (0, 0, 0))
     screen.blit(initial_enemy_encounter_text, (round(xScreenScaling / 3), ySize - textBarSize + 25))
-    screen.blit(SPRITE_ARROW, (xSize - 95, ySize - 95))
+    screen.blit(constants.SPRITE_ARROW, (xSize - 95, ySize - 95))
 
     # testing text
-    test_text = ROBOTO_30.render("win", False, (0, 0, 0))
+    test_text = constants.ROBOTO_30.render("win", False, (0, 0, 0))
     screen.blit(test_text, (0, ySize - 40))
 
 
@@ -417,10 +342,10 @@ while running:
             if not in_fight:
                 room_clicked = GetClickedRoom(mouse_position, mainFloor) # if room is invalid, will return None
                 if room_clicked is not None:
-                    if room_clicked.roomType == ROOM:
-                        room_clicked.roomType = CURRENT
+                    if room_clicked.roomType == constants.ROOM:
+                        room_clicked.roomType = constants.CURRENT
                         DrawRooms(mainFloor)
-                    elif room_clicked.roomType == ENEMY:
+                    elif room_clicked.roomType == constants.ENEMY:
                         fight_difficulty = mainFloor.currentRoom.difficulty
                         in_fight = True
                         InitFightScreen(fight_difficulty)
@@ -432,8 +357,8 @@ while running:
                     in_fight = False
                 # Insta win button
                 if (0 < mouse_position[0] < 50) and (ySize > mouse_position[1] > ySize - 40):
-                    mainFloor.currentRoom.roomType = ROOM
-                    room_clicked.roomType = CURRENT
+                    mainFloor.currentRoom.roomType = constants.ROOM
+                    room_clicked.roomType = constants.CURRENT
                     mainFloor.currentRoom = room_clicked
                     in_fight = False
                     DrawRooms(mainFloor)
