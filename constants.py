@@ -84,6 +84,17 @@ ROBOTO_30 = pygame.font.SysFont('Roboto', 45)
 
 # default dagger
 DAGGER_NAME = "Default Dagger"
-DAGGER_DESCRIPTION = "A short, blunt dagger."
+DAGGER_DESCRIPTION = "A tiny, blunt dagger."
 
+SHORTSWORD_NAME = "Shabby Shortsword"
+SHORTSWORD_DESCRIPTION = "A short, moderately pointy sword."
+
+FLAIL_NAME = "Fair Flail"
+FLAIL_DESCRIPTION = "An average sized metal ball attached by an average chain to an averagly sturdy wooden handle."
+
+LONGSWORD_NAME = "Legendary Longsword"
+LONGSWORD_DESCRIPTION = "A long, razor sharp blade with a sturdy handle."
+
+WAND_NAME = "Magic Wand"
+WAND_DESCRIPTION = "It just looks like a stick, surely it could not take down a foe."
 # endregion weapons
