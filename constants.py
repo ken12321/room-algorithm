@@ -79,3 +79,11 @@ DEMON = "demon"
 pygame.font.init()
 ROBOTO_30 = pygame.font.SysFont('Roboto', 45)
 # endregion
+
+# region weapons
+
+# default dagger
+DAGGER_NAME = "Default Dagger"
+DAGGER_DESCRIPTION = "A short, blunt dagger."
+
+# endregion weapons

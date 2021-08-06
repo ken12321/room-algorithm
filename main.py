@@ -2,6 +2,7 @@ import pygame
 import random
 import sys
 
+import player
 import constants
 import enemy
 import floor
@@ -75,7 +76,12 @@ def InitEnemy(enemy_difficulty):
     return current_enemy
 
 
+# Create the main floor object
 mainFloor = floor.Floor(TOTAL_FLOOR_LENGTH)
+current_player = player.Player("Ken")
+
+
+# Initialize the floor and draw the rooms
 GenerateRooms(mainFloor)
 DrawRooms(mainFloor)
 
