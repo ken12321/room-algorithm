@@ -9,6 +9,7 @@ class Enemy:
         self.sprite = self.InitSprite()
 
     def InitEnemyType(self):
+        # Initializes the enemy based on the difficulty of the room
         if self.difficulty <= 1:
             return constants.PIPPER
         elif 2 <= self.difficulty <= 3:
@@ -25,6 +26,7 @@ class Enemy:
             return constants.DEMON
 
     def InitSprite(self):
+        # Initializes the enemy's sprite based on which enemy it is
         if self.enemyType == constants.PIPPER:
             return constants.SPRITE_PIPPER
         elif self.enemyType == constants.SLUGGA:

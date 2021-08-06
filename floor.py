@@ -25,6 +25,7 @@ class Floor:
                 self.nonSolidRooms.append(room)
 
     def GetRoomAt(self, coords):
+        # Returns the room object at the given co-ordinates
         for room in self.floor_array:
             if room.position == coords:
                 return room

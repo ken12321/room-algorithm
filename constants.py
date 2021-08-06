@@ -1,5 +1,10 @@
 import pygame
 
+# screen sizing defaults
+DEFAULT_X_SIZE = 700
+DEFAULT_Y_SIZE = 700
+
+
 # region Sprites
 # region ENEMY SPRITES
 SPRITE_PIPPER = pygame.image.load('./images/enemies/pipper.png')
