@@ -7,30 +7,30 @@ DEFAULT_Y_SIZE = 700
 
 # region Sprites
 # region ENEMY SPRITES
-SPRITE_PIPPER = pygame.image.load('./images/enemies/pipper.png')
-SPRITE_PIPPER = pygame.transform.scale(SPRITE_PIPPER, (150, 150))
+SPRITE_LOAD_PIPPER = pygame.image.load('./images/enemies/pipper.png')
+SPRITE_PIPPER = pygame.transform.scale(SPRITE_LOAD_PIPPER, (150, 150))
 
-SPRITE_SLUGGA = pygame.image.load('./images/enemies/slugga.png')
-SPRITE_SLUGGA = pygame.transform.scale(SPRITE_SLUGGA, (150, 150))
+SPRITE_LOAD_SLUGGA = pygame.image.load('./images/enemies/slugga.png')
+SPRITE_SLUGGA = pygame.transform.scale(SPRITE_LOAD_SLUGGA, (150, 150))
 
-SPRITE_LIZASAUR = pygame.image.load('./images/enemies/lizasaur.png')
-SPRITE_LIZASAUR = pygame.transform.scale(SPRITE_LIZASAUR, (150, 150))
+SPRITE_LOAD_LIZASAUR = pygame.image.load('./images/enemies/lizasaur.png')
+SPRITE_LIZASAUR = pygame.transform.scale(SPRITE_LOAD_LIZASAUR, (150, 150))
 
-SPRITE_SKRELL = pygame.image.load('./images/enemies/skrell.png')
-SPRITE_SKRELL = pygame.transform.scale(SPRITE_SKRELL, (150, 150))
+SPRITE_LOAD_SKRELL = pygame.image.load('./images/enemies/skrell.png')
+SPRITE_SKRELL = pygame.transform.scale(SPRITE_LOAD_SKRELL, (150, 150))
 
-SPRITE_CULTIST = pygame.image.load('./images/enemies/cultist.png')
-SPRITE_CULTIST = pygame.transform.scale(SPRITE_CULTIST, (150, 150))
+SPRITE_LOAD_CULTIST = pygame.image.load('./images/enemies/cultist.png')
+SPRITE_CULTIST = pygame.transform.scale(SPRITE_LOAD_CULTIST, (150, 150))
 
-SPRITE_SIREN = pygame.image.load('./images/enemies/siren.png')
-SPRITE_SIREN = pygame.transform.scale(SPRITE_SIREN, (150, 150))
+SPRITE_LOAD_SIREN = pygame.image.load('./images/enemies/siren.png')
+SPRITE_SIREN = pygame.transform.scale(SPRITE_LOAD_SIREN, (150, 150))
 
-SPRITE_DEMON = pygame.image.load('./images/enemies/demon.png')
-SPRITE_DEMON = pygame.transform.scale(SPRITE_DEMON, (150, 150))
+SPRITE_LOAD_DEMON = pygame.image.load('./images/enemies/demon.png')
+SPRITE_DEMON = pygame.transform.scale(SPRITE_LOAD_DEMON, (150, 150))
 # endregion
 
-SPRITE_ARROW = pygame.image.load('./images/misc/arrow.png')
-SPRITE_ARROW = pygame.transform.scale(SPRITE_ARROW, (75, 75))
+SPRITE_LOAD_ARROW = pygame.image.load('./images/misc/arrow.png')
+SPRITE_ARROW = pygame.transform.scale(SPRITE_LOAD_ARROW, (75, 75))
 # endregion
 
 # region colour constants
@@ -82,19 +82,36 @@ ROBOTO_30 = pygame.font.SysFont('Roboto', 45)
 
 # region weapons
 
-# default dagger
-DAGGER_NAME = "Default Dagger"
+# weapon names + descriptions
+DAGGER_NAME = "Dagger"
 DAGGER_DESCRIPTION = "A tiny, blunt dagger."
 
-SHORTSWORD_NAME = "Shabby Shortsword"
+SHORTSWORD_NAME = "Shortsword"
 SHORTSWORD_DESCRIPTION = "A short, moderately pointy sword."
 
-FLAIL_NAME = "Fair Flail"
+FLAIL_NAME = "Flail"
 FLAIL_DESCRIPTION = "An average sized metal ball attached by an average chain to an averagly sturdy wooden handle."
 
-LONGSWORD_NAME = "Legendary Longsword"
+LONGSWORD_NAME = "Longsword"
 LONGSWORD_DESCRIPTION = "A long, razor sharp blade with a sturdy handle."
 
 WAND_NAME = "Magic Wand"
 WAND_DESCRIPTION = "It just looks like a stick, surely it could not take down a foe."
+
+# weapons sprites
+SPRITE_LOAD_DAGGER = pygame.image.load('./images/weapons/dagger.png')
+SPRITE_DAGGER = pygame.transform.scale(SPRITE_LOAD_DAGGER, (50, 50))
+
+SPRITE_LOAD_SHORTSWORD = pygame.image.load('./images/weapons/shortsword.png')
+SPRITE_SHORTSWORD = pygame.transform.scale(SPRITE_LOAD_SHORTSWORD, (50, 50))
+
+SPRITE_LOAD_FLAIL = pygame.image.load('./images/weapons/flail.png')
+SPRITE_FLAIL = pygame.transform.scale(SPRITE_LOAD_FLAIL, (50, 50))
+
+SPRITE_LOAD_LONGSWORD = pygame.image.load('./images/weapons/longsword.png')
+SPRITE_LONGSWORD = pygame.transform.scale(SPRITE_LOAD_LONGSWORD, (50, 50))
+
+SPRITE_LOAD_WAND = pygame.image.load('./images/weapons/wand.png')
+SPRITE_WAND = pygame.transform.scale(SPRITE_LOAD_WAND, (50, 50))
+
 # endregion weapons

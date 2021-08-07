@@ -23,7 +23,7 @@ class Player:
         display_weapons_inventory = []
         for weapon in self.weapons_inventory:
             display_weapons_inventory.append(weapon.name)
-        print(display_weapons_inventory)
+        return(display_weapons_inventory)
 
     def AddToWeaponsInventory(self, weapon):
         self.weapons_inventory.append(weapon)

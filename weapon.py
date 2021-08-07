@@ -6,3 +6,5 @@ class Weapon:
         self.description = description
         self.damage = damage
 
+    
+
