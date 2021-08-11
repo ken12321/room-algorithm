@@ -5,7 +5,6 @@ def ScreenSetup(xSize, ySize):
     pygame.init()
     
     # creates screen
-
     screen = pygame.display.set_mode((xSize, ySize))
 
     # setup

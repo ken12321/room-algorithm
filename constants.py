@@ -52,6 +52,9 @@ TESTCOL = (135, 73, 73)
 MAIN_TEXT_SCREEN = (222, 229, 229)
 MAIN_TEXT_BORDER = (157, 197, 187)
 
+INVENTORY_COLOR = (229, 227, 222)
+INVENTORY_BORDER_COLOR = (194, 182, 153)
+
 # 23, 184, 144
 # 94, 128, 127
 # 8, 45, 15
@@ -100,18 +103,18 @@ WAND_DESCRIPTION = "It just looks like a stick, surely it could not take down a 
 
 # weapons sprites
 SPRITE_LOAD_DAGGER = pygame.image.load('./images/weapons/dagger.png')
-SPRITE_DAGGER = pygame.transform.scale(SPRITE_LOAD_DAGGER, (50, 50))
+SPRITE_DAGGER = pygame.transform.scale(SPRITE_LOAD_DAGGER, (65, 65))
 
 SPRITE_LOAD_SHORTSWORD = pygame.image.load('./images/weapons/shortsword.png')
-SPRITE_SHORTSWORD = pygame.transform.scale(SPRITE_LOAD_SHORTSWORD, (50, 50))
+SPRITE_SHORTSWORD = pygame.transform.scale(SPRITE_LOAD_SHORTSWORD, (65, 65))
 
 SPRITE_LOAD_FLAIL = pygame.image.load('./images/weapons/flail.png')
-SPRITE_FLAIL = pygame.transform.scale(SPRITE_LOAD_FLAIL, (50, 50))
+SPRITE_FLAIL = pygame.transform.scale(SPRITE_LOAD_FLAIL, (65, 65))
 
 SPRITE_LOAD_LONGSWORD = pygame.image.load('./images/weapons/longsword.png')
-SPRITE_LONGSWORD = pygame.transform.scale(SPRITE_LOAD_LONGSWORD, (50, 50))
+SPRITE_LONGSWORD = pygame.transform.scale(SPRITE_LOAD_LONGSWORD, (65, 65))
 
 SPRITE_LOAD_WAND = pygame.image.load('./images/weapons/wand.png')
-SPRITE_WAND = pygame.transform.scale(SPRITE_LOAD_WAND, (50, 50))
+SPRITE_WAND = pygame.transform.scale(SPRITE_LOAD_WAND, (65, 65))
 
 # endregion weapons
